@@ -1,0 +1,165 @@
+@startuml TP
+
+'''''''''''''''''' Localidades '''''''''''''''
+
+class Localidad {
+    #nombre
+    #equipajeImprescindible = #{}
+    #precio
+    #kilometro
+
+    +esDestacada()
+    +esPeligrosa() 
+    +aplicarDescuento(porcentajeDescuento)
+    -agregarEquipaje(unEquipaje)
+    +distanciaHasta(otraLocalidad)
+}
+
+class Playa {
+    +esPeligrosa()
+}
+
+class Montaña {
+    -altura
+    +esPeligrosa()
+    +esDestacada()
+}
+
+class CiudadHistorica {
+    -cantidadMuseos
+    +esPeligrosa()
+    +esDestacada()
+}
+
+Playa -u-|> Localidad : hereda
+Montaña -u-|> Localidad : hereda
+CiudadHistorica -u-|> Localidad : hereda
+
+'''''''''''''' Medios De Transporte '''''''''''''''''
+
+abstract class MedioDeTransporte {
+    #demora
+    +costoPorKm()
+}
+
+interface IMedioDeTransporte {
+    costoPorKm()
+}
+
+MedioDeTransporte .u.|> IMedioDeTransporte : implementa
+
+class Avion {
+    -turbinas
+    +costoPorKm()
+}
+
+class Turbina {
+    -impulso
+}
+
+Avion --* "*" Turbina : compone 
+
+class Micro {
+    +costoPorKm()
+}
+
+class Tren {
+    -costoPorMilla
+    +costoPorKm()
+}
+
+class Barco {
+    -probabilidadChocarIceberg
+    +costoPorKm()
+}
+
+Avion -u-|> MedioDeTransporte : hereda
+Micro -u-|> MedioDeTransporte : hereda
+Tren -u-|> MedioDeTransporte : hereda
+Barco -u-|> MedioDeTransporte : hereda
+
+''''''''''''' Viajes ''''''''''''''''''
+
+class Viaje {
+    #origen
+    #localidad
+    #transporte 
+    
+    +distancia()
+    -costoTransporte()
+    +costo()
+}
+
+Viaje --* "*" MedioDeTransporte : compone
+
+interface IViaje {
+    distancia()
+    costo()
+}
+
+Viaje .u.|> IViaje : implementa
+
+''''''''''''''' Perfiles '''''''''''''
+
+class Perfil {
+    +elegirViaje(viajesCandidatos, dinero)
+}
+
+class PerfilEstudiantil {
+    +elegirViaje(viajesCandidatos, dinero)
+    -viajesCosteables(viajesCandidatos, dinero)
+}
+
+class PerfilGrupoFamiliar {
+    +elegirViaje(viajesCandidatos, dinero)
+}
+
+PerfilEstudiantil .u.|> Perfil : implementa
+PerfilEmpresarial .u.|> Perfil : implementa
+PerfilGrupoFamiliar .u.|> Perfil : implementa
+
+Perfil ..> IViaje : usa
+Perfil ..> IMedioDeTransporte : usa
+
+'''''''''''''''' Usuarios '''''''''''''''
+
+class Usuario {
+	-username
+    -perfil
+    #localidadOrigen
+    #viajes
+    -follows
+    #dinero
+
+    -puedeViajar(viaje)
+    +viajar(destino)
+    +kilometros()
+    +seguir(usuario)
+    -sigueA(usuario)
+}
+
+Usuario --* Perfil : compone
+Usuario --* Localidad : compone
+Usuario --* "*" Viaje : compone
+
+'''''''''''''''' Barrilete '''''''''''''
+
+object BarrileteCosmico {
+    #localidades = #{garlicsSea, silversSea, lastToninas, goodAirs}
+    #usuarios = #{pabloHari}
+    -mediosDeTransporte = #{avion}
+
+    +destinosMasImportantes()
+    +aplicarDescuentos()
+    +esExtrema()
+    +cartaDestinos()
+    +armarViaje(usuario, destinoViaje)
+}
+
+
+BarrileteCosmico --* "*" Usuario : compone
+BarrileteCosmico --* "*" MedioDeTransporte : compone
+BarrileteCosmico --* "*" Localidad : compone
+BarrileteCosmico --> Viaje : usa
+
+@enduml

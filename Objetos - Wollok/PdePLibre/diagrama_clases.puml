@@ -1,0 +1,97 @@
+@startuml diagrama
+
+class Cupon {
+    #fueUsado
+    -porcentajeDescuento
+
+    +aplicar(precioBase)
+}
+
+abstract class Producto {
+    -nombre
+    -precioBase
+
+    +precio()
+    +nombreDeOferta()
+}
+
+class Mueble {
+    +precio()
+}
+
+class Indumentaria {
+
+}
+
+class Ganga {
+    +precio()
+}
+
+Producto <|-d- Mueble : hereda
+Producto <|-d- Indumentaria : hereda
+Producto <|-d- Ganga : hereda
+
+abstract class Nivel {
+    #puntosNecesarios
+
+    +puedeAcceder(puntos)
+    +puedeAgregarProducto(carrito)
+}
+
+object oro {
+    puntosNecesarios = 15000
+    +puedeAgregarProducto(carrito)
+}
+
+object plata {
+    puntosNecesarios = 5000
+    +puedeAgregarProducto(carrito)
+}
+
+object bronce {
+    puntosNecesarios = 0
+    +puedeAgregarProducto(carrito)
+}
+
+Nivel <|-d- oro : hereda
+Nivel <|-d- plata : hereda
+Nivel <|-d- bronce : hereda
+
+class Usuario {
+    -nombre
+    -dinero
+    -nivel
+    -puntos
+    -carrito = []
+    -cupones = []
+
+    +agregarProductoAlCarrito(producto)
+    -cuponesUsables()
+    -tieneCuponesUsables()
+    -tomarCupon()
+    -pagar(costo)
+    +comprarProductosDelCarrito()
+    +esMoroso()
+    +perderPuntos(cantidad)
+    +eliminarCuponesUsados()
+    +actualizarNivel()
+}
+
+Usuario -d-* Nivel : compone
+Usuario -d-> "*" Producto : productos
+Usuario -d-> "*" Cupon : cupones
+
+object PdePLibre {
+    -usuarios = #{}
+    -productos = []
+
+    +penalizarUsuariosMorosos()
+    +eliminarCuponesUsados()
+    +nombresDeOfertaDeProductos()
+    +actualizarNivelesDeUsuarios()
+}
+
+PdePLibre -d-> "*" Usuario : usuarios
+PdePLibre -d-> "*" Producto : productos
+
+@enduml

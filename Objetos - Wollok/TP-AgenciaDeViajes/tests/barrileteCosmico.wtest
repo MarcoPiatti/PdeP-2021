@@ -1,0 +1,48 @@
+import main.localidades.*
+import main.barrileteCosmico.*
+
+describe "Tests de Barrilete Cosmico" {
+
+	test "Destinos mas importantes" {
+		assert.equals(#{ garlicsSea, lastToninas }, barrileteCosmico.localidadesMasImportantes())
+	}
+
+	describe "Aplicar 15% de descuento a todos los destinos" {
+		method initialize() {
+			barrileteCosmico.aplicarDescuentos(15)
+		}
+
+		test "El precio de Garlics Sea queda en 2125"{
+			assert.equals(2125, garlicsSea.precio())
+		}				
+		test "El precio de Silvers Sea queda en 1147.5"{
+			assert.equals(1147.5, silversSea.precio())
+		}		
+		test "El precio de Last Toninas queda en 2975"{
+			assert.equals(2975, lastToninas.precio())
+		}	
+		test "El precio de Good Airs queda en 1275"{
+			assert.equals(1275, goodAirs.precio())
+		}
+		test "Todos los destinos tienen Certificado de descuento"{
+			assert.that(barrileteCosmico.localidades().all({ destino => destino.equipajeImprescindible().contains("Certificado de descuento")}))
+		}
+	}
+
+	test "Obtener los destinos mas peligrosos hasta el momento" {
+		assert.equals(#{ lastToninas }, barrileteCosmico.destinos().filter({ destino => destino.esPeligroso()}))
+	}
+
+	test "Barrilete Cosmico es una empresa extrema" {
+		assert.that(barrileteCosmico.esExtrema())
+	}
+
+	test "Conocer la carta de destinos de Barrilete Cosmico" {
+		assert.equals(#{ lastToninas, garlicsSea, goodAirs,silversSea,marDelPlata,cerroMalo,machuPichu}, barrileteCosmico.destinos())
+	}
+	
+	
+	
+	
+	
+}

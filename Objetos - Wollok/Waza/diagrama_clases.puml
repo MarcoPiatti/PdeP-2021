@@ -1,0 +1,110 @@
+@startuml diagrama
+
+abstract class Vehiculo {
+    -capacidad
+    -combustible
+    #velocidad
+
+    +topeDeCarga(litrosACargar)
+    +cargarCombustible(litros)
+    +esEcologico()
+    +recorrer(distancia)
+}
+
+interface IVehiculo {
+    +topeDeCarga(litrosACargar)
+    +cargarCombustible(litros)
+    +esEcologico()
+    +recorrer(distancia)
+}
+
+Vehiculo .u.|> IVehiculo : implementa
+
+class Camioneta {
+    +esEcologico()
+    +recorrer(distancia)
+}
+
+class Deportivo {
+    +esEcologico()
+    +recorrer(distancia)
+}
+
+class Familiar {
+    +esEcologico()
+}
+
+Camioneta -u-|> Vehiculo : hereda
+Deportivo -u-|> Vehiculo : hereda
+Familiar -u-|> Vehiculo : hereda
+
+class Usuario {
+    -nombre
+    #DNI
+    #dinero
+    #vehiculo
+    #multas
+
+    -puedePagar(gasto)
+    +cargarGasolina(litros)
+    +serMultado(costo)
+    +pagarMultas()
+}
+
+interface IUsuario {
+    +cargarGasolina(litros)
+    +serMultado(costo)
+    +pagarMultas()
+}
+
+Usuario .u.|> IUsuario : implementa
+Usuario --* Vehiculo : compone
+
+abstract class Control {
+    +multar(usuario, costoMulta)
+    +controlar(usuario, limiteDeVelocidad)
+}
+
+Control .d.> IUsuario : usa
+Control ..> IVehiculo : usa
+
+class ControlDeVelocidad {
+    +controlar(usuario, limiteDeVelocidad)
+}
+
+class ControlEcologico {
+    +controlar(usuario, limiteDeVelocidad)
+}
+
+class ControlRegulatorio {
+    +controlar(usuario, limiteDeVelocidad)
+}
+
+ControlDeVelocidad -u-|> Control : hereda
+ControlEcologico -u-|> Control : hereda
+ControlRegulatorio -u-|> Control : hereda
+
+class Zona {
+    -velocidadMaxima
+    -usuariosEnTransito
+    -controles
+
+    +activarControles()
+}
+
+Zona --* "*" Usuario : compone
+Zona --* "*" Control : compone
+
+object Sistema {
+    -usuarios
+    -zonas
+    
+    +pagarMultas()
+    +zonaMasTransitada()
+    +usuariosComplicados()
+}
+
+Sistema --* "*" Usuario : compone
+Sistema --* "*" Zona : compone
+
+@enduml

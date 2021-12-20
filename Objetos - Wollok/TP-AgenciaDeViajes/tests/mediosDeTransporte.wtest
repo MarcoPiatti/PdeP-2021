@@ -1,0 +1,19 @@
+import main.mediosDeTransporte.*
+
+describe "test de transportes" {
+	test "El costoPorKm de un barco con probabilidad 0.5 es 500"{
+		assert.equals(500, barco.costoPorKm())
+	}
+	
+	test "El costoPorKm de un micro es 5000"{
+		assert.equals(5000, micro.costoPorKm())
+	}
+		
+	test "El costoPorKm de un avion con una turbina con 1000 de impulso es 1000"{
+		assert.equals(1000, stukaRacuda.costoPorKm())
+	}
+
+	test "El costoPorKm de tren es 1429.459291"{
+		assert.equals(1429.459291, tren.costoPorKm())
+	}
+}

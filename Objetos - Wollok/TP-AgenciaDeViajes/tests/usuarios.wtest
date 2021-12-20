@@ -1,0 +1,30 @@
+import main.usuarios.*
+import main.localidades.*
+
+describe "Tests de Usuarios" {
+
+    test "Obtener las millas de PHari" {
+		assert.equals(660, pabloHari.kilometros())
+	}
+
+	describe "Hacer que PHari viaje a Silvers Sea" {
+		method initialize(){
+			pabloHari.viajar(silversSea)
+		}
+
+		test "Silvers Sea aparece en el ultimo viaje realizado"{
+			assert.equals(silversSea, pabloHari.viajes().last().destino())
+		}
+
+		test "PHari queda con 150 pesos"{
+			assert.equals(150, pabloHari.dinero())
+		}
+	}
+
+	describe "Un usuario empresarial viaja" {
+		method initialize(){
+			
+		}	
+	}
+	
+}

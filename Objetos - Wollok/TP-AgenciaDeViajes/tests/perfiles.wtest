@@ -1,0 +1,60 @@
+import main.usuarios.*
+import main.localidades.*
+import main.viajes.*
+import main.mediosDeTransporte.*
+import main.perfiles.*
+
+describe "test de perfiles" {
+        const viaje1 = new Viaje(origen = goodAirs, destino = lastToninas, transporte = stukaRacuda)
+        const viaje2 = new Viaje(origen = lastToninas, destino = goodAirs, transporte = stukaRacuda)
+        const viaje3 = new Viaje(origen = goodAirs, destino = marDelPlata, transporte = micro)
+        const viaje4 = new Viaje(origen = marDelPlata, destino = goodAirs, transporte = micro)
+        const viaje5 = new Viaje(origen = cerroMalo, destino = lastToninas, transporte = tren)
+        const viaje6 = new Viaje(origen = lastToninas, destino = cerroMalo, transporte = tren)
+        const viaje7 = new Viaje(origen = garlicsSea, destino = cerroMalo, transporte = barco)
+        const viaje8 = new Viaje(origen = garlicsSea, destino = cerroMalo, transporte = barco)
+
+        var viajes = [viaje1 , viaje2, viaje3, viaje4, viaje5, viaje6, viaje7, viaje8]
+                
+
+        test "perfil estudiante"{
+            assert.equals(viaje1, perfilEstudiantil.elegirViaje(viajes, 5000))
+        }
+        
+        test "perfil estudiante 1"{
+            assert.equals(viaje1, perfilEstudiantil.elegirViaje(viajes, 1000))
+        }
+        
+        test "perfil estudiante 2"{
+            assert.equals(viaje1, perfilEstudiantil.elegirViaje(viajes, 50000))
+        }
+        
+         test "perfil estudiante 3"{
+            assert.equals(viaje1, perfilEstudiantil.elegirViaje(viajes, 500000))
+        }
+        
+         test "perfil estudiante 4"{
+            assert.equals(viaje1, perfilEstudiantil.elegirViaje(viajes, 5000000))
+        }
+
+        test "perfil empresarial"{
+            assert.equals(viaje5, perfilEstudiantil.elegirViaje(viajes, 2500))
+        }
+
+        test "perfil familiar"{
+            assert.equals(viaje5, perfilEstudiantil.elegirViaje(viajes, 1000))
+        }
+
+        test "perfil estudiante 1"{
+            assert.equals(viaje6, perfilEstudiantil.elegirViaje(viajes, 5000))
+        }
+
+        test "perfil empresarial 1"{
+            assert.equals(viaje5, perfilEstudiantil.elegirViaje(viajes, 2500))
+        }
+
+        test "perfil familiar 1"{
+            assert.equals(viaje5, perfilEstudiantil.elegirViaje(viajes, 1000))
+        }
+    
+}

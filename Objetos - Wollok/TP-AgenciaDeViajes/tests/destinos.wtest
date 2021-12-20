@@ -1,0 +1,37 @@
+import main.localidades.*
+
+describe "Tests de Destinos" {
+    describe "Aplicar 25% de descuento a Last Toninas" {
+		method initialize() {
+			lastToninas.aplicarDescuento(25)
+		}
+		
+		test "El precio de Last Toninas queda en 2625" {
+			assert.equals(2625, lastToninas.precio())
+		}
+
+		test "Last toninas tiene Certificado de descuento" {
+			assert.that(lastToninas.equipajeImprescindible().contains("Certificado de descuento"))
+		}
+	}
+
+	test "Silvers Sea no es un destino peligroso" {
+		assert.notThat(silversSea.esPeligroso())
+	}
+
+	test "Una playa no es  un destino peligroso" {
+		assert.notThat(marDelPlata.esPeligroso())
+	}
+
+	test "machu pichu es destacada" {
+		assert.that(machuPichu.esDestacada())
+	}
+
+	test "cerro Malo es destacada" {
+		assert.that(cerroMalo.esDestacada())
+	}
+	
+	test "cerro Malo es peligrosa" {
+		assert.that(cerroMalo.esPeligroso())
+	}	
+}
